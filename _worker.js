@@ -3,6 +3,8 @@ var __name = (target, value) => __defProp(target, "name", { value, configurable:
 
 // _worker.js
 import { connect } from "cloudflare:sockets";
+var __defProp2 = Object.defineProperty;
+var __name2 = /* @__PURE__ */ __name((target, value) => __defProp2(target, "name", { value, configurable: true }), "__name");
 var password = "";
 var proxyIP = "";
 var subConverter = atob("U1VCQVBJLkNNTGl1c3Nzcy5uZXQ=");
@@ -25,7 +27,7 @@ var addressesapi = [];
 var addressescsv = [];
 var DLS = 8;
 var remarkIndex = 1;
-var FileName = "epeius";
+var FileName = "king";
 var BotToken = "";
 var ChatID = "";
 var proxyhosts = [];
@@ -55,18 +57,15 @@ var worker_default = {
         });
       }
       sha224Password = env.SHA224 || env.SHA224PASS || sha224(password);
-      // Real expire system
-const EXPIRE_AT = Number(env.EXPIRE_AT || 0);
-
-if (EXPIRE_AT && Math.floor(Date.now() / 1000) > EXPIRE_AT) {
-    return new Response('Expired', {
-        status: 403,
-        headers: {
-            'Content-Type': 'text/plain;charset=utf-8'
-        }
-    });
-}
-
+      const EXPIRE_AT = Number(env.EXPIRE_AT || 0);
+      if (EXPIRE_AT && Math.floor(Date.now() / 1e3) > EXPIRE_AT) {
+        return new Response("Expired", {
+          status: 403,
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          }
+        });
+      }
       const currentDate = /* @__PURE__ */ new Date();
       currentDate.setHours(0, 0, 0, 0);
       const timestamp = Math.ceil(currentDate.getTime() / 1e3);
@@ -268,7 +267,7 @@ async function \u7279\u6D1B\u4F0AOverWSHandler(request) {
   webSocket.accept();
   let address = "";
   let portWithRandomLog = "";
-  const log = /* @__PURE__ */ __name((info, event) => {
+  const log = /* @__PURE__ */ __name2((info, event) => {
     console.log(`[${address}:${portWithRandomLog}] ${info}`, event || "");
   }, "log");
   const earlyDataHeader = request.headers.get("sec-websocket-protocol") || "";
@@ -325,6 +324,7 @@ async function \u7279\u6D1B\u4F0AOverWSHandler(request) {
   });
 }
 __name(\u7279\u6D1B\u4F0AOverWSHandler, "\u7279\u6D1B\u4F0AOverWSHandler");
+__name2(\u7279\u6D1B\u4F0AOverWSHandler, "\u7279\u6D1B\u4F0AOverWSHandler");
 async function parse\u7279\u6D1B\u4F0AHeader(buffer) {
   if (buffer.byteLength < 56) {
     return {
@@ -414,6 +414,7 @@ async function parse\u7279\u6D1B\u4F0AHeader(buffer) {
   };
 }
 __name(parse\u7279\u6D1B\u4F0AHeader, "parse\u7279\u6D1B\u4F0AHeader");
+__name2(parse\u7279\u6D1B\u4F0AHeader, "parse\u7279\u6D1B\u4F0AHeader");
 async function handleTCPOutBound(remoteSocket, addressRemote, portRemote, rawClientData, webSocket, log, addressType) {
   async function useSocks5Pattern(address) {
     if (go2Socks5s.includes(atob("YWxsIGlu")) || go2Socks5s.includes(atob("Kg=="))) return true;
@@ -424,6 +425,7 @@ async function handleTCPOutBound(remoteSocket, addressRemote, portRemote, rawCli
     });
   }
   __name(useSocks5Pattern, "useSocks5Pattern");
+  __name2(useSocks5Pattern, "useSocks5Pattern");
   const \u542F\u7528SOCKS5\u5168\u5C40\u53CD\u4EE3 = go2Socks5s.length > 0 && enableSocks ? await useSocks5Pattern(addressRemote) : null;
   async function connectAndWrite(address, port) {
     let tcpSocket2;
@@ -449,6 +451,7 @@ async function handleTCPOutBound(remoteSocket, addressRemote, portRemote, rawCli
     return tcpSocket2;
   }
   __name(connectAndWrite, "connectAndWrite");
+  __name2(connectAndWrite, "connectAndWrite");
   async function retry() {
     const tcpSocket2 = connect(atob("UFJPWFlJUC50cDEuMDkwMjI3Lnh5eg=="), 1);
     tcpSocket2.closed.catch((error) => {
@@ -458,10 +461,12 @@ async function handleTCPOutBound(remoteSocket, addressRemote, portRemote, rawCli
     remoteSocketToWS(tcpSocket2, webSocket, null);
   }
   __name(retry, "retry");
+  __name2(retry, "retry");
   const tcpSocket = await connectAndWrite(addressRemote, portRemote);
   remoteSocketToWS(tcpSocket, webSocket, retry);
 }
 __name(handleTCPOutBound, "handleTCPOutBound");
+__name2(handleTCPOutBound, "handleTCPOutBound");
 function makeReadableWebSocketStream(webSocketServer, earlyDataHeader, log) {
   let readableStreamCancel = false;
   const stream = new ReadableStream({
@@ -505,6 +510,7 @@ function makeReadableWebSocketStream(webSocketServer, earlyDataHeader, log) {
   return stream;
 }
 __name(makeReadableWebSocketStream, "makeReadableWebSocketStream");
+__name2(makeReadableWebSocketStream, "makeReadableWebSocketStream");
 async function remoteSocketToWS(remoteSocket, webSocket, retry, log) {
   let hasIncomingData = false;
   await remoteSocket.readable.pipeTo(
@@ -545,6 +551,7 @@ async function remoteSocketToWS(remoteSocket, webSocket, retry, log) {
   }
 }
 __name(remoteSocketToWS, "remoteSocketToWS");
+__name2(remoteSocketToWS, "remoteSocketToWS");
 function base64ToArrayBuffer(base64Str) {
   if (!base64Str) {
     return { earlyData: void 0, error: null };
@@ -559,6 +566,7 @@ function base64ToArrayBuffer(base64Str) {
   }
 }
 __name(base64ToArrayBuffer, "base64ToArrayBuffer");
+__name2(base64ToArrayBuffer, "base64ToArrayBuffer");
 var WS_READY_STATE_OPEN = 1;
 var WS_READY_STATE_CLOSING = 2;
 function safeCloseWebSocket(socket) {
@@ -571,6 +579,7 @@ function safeCloseWebSocket(socket) {
   }
 }
 __name(safeCloseWebSocket, "safeCloseWebSocket");
+__name2(safeCloseWebSocket, "safeCloseWebSocket");
 function revertFakeInfo(content, userID, hostName, fakeUserID, fakeHostName, isBase64) {
   if (isBase64) content = atob(content);
   content = content.replace(new RegExp(fakeUserID, "g"), userID).replace(new RegExp(fakeHostName, "g"), hostName);
@@ -578,6 +587,7 @@ function revertFakeInfo(content, userID, hostName, fakeUserID, fakeHostName, isB
   return content;
 }
 __name(revertFakeInfo, "revertFakeInfo");
+__name2(revertFakeInfo, "revertFakeInfo");
 async function MD5MD5(text) {
   const encoder = new TextEncoder();
   const firstPass = await crypto.subtle.digest("MD5", encoder.encode(text));
@@ -589,6 +599,7 @@ async function MD5MD5(text) {
   return secondHex.toLowerCase();
 }
 __name(MD5MD5, "MD5MD5");
+__name2(MD5MD5, "MD5MD5");
 async function ADD(\u5185\u5BB9) {
   var \u66FF\u6362\u540E\u7684\u5185\u5BB9 = \u5185\u5BB9.replace(/[	"'\r\n]+/g, ",").replace(/,+/g, ",");
   if (\u66FF\u6362\u540E\u7684\u5185\u5BB9.charAt(0) == ",") \u66FF\u6362\u540E\u7684\u5185\u5BB9 = \u66FF\u6362\u540E\u7684\u5185\u5BB9.slice(1);
@@ -597,6 +608,7 @@ async function ADD(\u5185\u5BB9) {
   return \u5730\u5740\u6570\u7EC4;
 }
 __name(ADD, "ADD");
+__name2(ADD, "ADD");
 async function proxyURL(proxyURL2, url) {
   const URLs = await ADD(proxyURL2);
   const fullURL = URLs[Math.floor(Math.random() * URLs.length)];
@@ -621,6 +633,7 @@ async function proxyURL(proxyURL2, url) {
   return newResponse;
 }
 __name(proxyURL, "proxyURL");
+__name2(proxyURL, "proxyURL");
 var subParams = ["sub", "base64", "b64", "clash", "singbox", "sb", "surge"];
 var cmad = decodeURIComponent(atob(`dGVsZWdyYW0lMjAlRTQlQkElQTQlRTYlQjUlODElRTclQkUlQTQlMjAlRTYlOEElODAlRTYlOUMlQUYlRTUlQTQlQTclRTQlQkQlQUMlN0UlRTUlOUMlQTglRTclQkElQkYlRTUlOEYlOTElRTclODklOEMhJTNDYnIlM0UKJTNDYSUyMGhyZWYlM0QlMjdodHRwcyUzQSUyRiUyRnQubWUlMkZDTUxpdXNzc3MlMjclM0VodHRwcyUzQSUyRiUyRnQubWUlMkZDTUxpdXNzc3MlM0MlMkZhJTNFJTNDYnIlM0UKLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tJTNDYnIlM0UKZ2l0aHViJTIwJUU5JUExJUI5JUU3JTlCJUFFJUU1JTlDJUIwJUU1JTlEJTgwJTIwU3RhciFTdGFyIVN0YXIhISElM0NiciUzRQolM0NhJTIwaHJlZiUzRCUyN2h0dHBzJTNBJTJGJTJGZ2l0aHViLmNvbSUyRmNtbGl1JTJGZXBlaXVzJTI3JTNFaHR0cHMlM0ElMkYlMkZnaXRodWIuY29tJTJGY21saXUlMkZlcGVpdXMlM0MlMkZhJTNFJTNDYnIlM0UKLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tJTNDYnIlM0UKJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIzJTIz`));
 async function get\u7279\u6D1B\u4F0AConfig(password2, hostName, sub, UA, \u8BF7\u6C42CF\u53CD\u4EE3IP2, _url, fakeUserID, fakeHostName, env) {
@@ -657,7 +670,7 @@ async function get\u7279\u6D1B\u4F0AConfig(password2, hostName, sub, UA, \u8BF7\
       }
     }
     if (addresses.length + addressesapi.length + addressescsv.length == 0) {
-      let generateRandomIPFromCIDR = function(cidr) {
+      let generateRandomIPFromCIDR = /* @__PURE__ */ __name(function(cidr) {
         const [base, mask] = cidr.split("/");
         const baseIP = base.split(".").map(Number);
         const subnetMask = 32 - parseInt(mask, 10);
@@ -669,8 +682,8 @@ async function get\u7279\u6D1B\u4F0AConfig(password2, hostName, sub, UA, \u8BF7\
           return (octet & 255 << subnetMask) + (randomHost & 255);
         });
         return randomIP.join(".");
-      };
-      __name(generateRandomIPFromCIDR, "generateRandomIPFromCIDR");
+      }, "generateRandomIPFromCIDR");
+      __name2(generateRandomIPFromCIDR, "generateRandomIPFromCIDR");
       let cfips = ["104.16.0.0/13"];
       try {
         const response = await fetch("https://raw.githubusercontent.com/cmliu/cmliu/main/CF-CIDR.txt");
@@ -785,6 +798,7 @@ async function get\u7279\u6D1B\u4F0AConfig(password2, hostName, sub, UA, \u8BF7\
   }
 }
 __name(get\u7279\u6D1B\u4F0AConfig, "get\u7279\u6D1B\u4F0AConfig");
+__name2(get\u7279\u6D1B\u4F0AConfig, "get\u7279\u6D1B\u4F0AConfig");
 async function sendMessage(type, ip, add_data = "") {
   if (BotToken !== "" && ChatID !== "") {
     let msg = "";
@@ -815,6 +829,7 @@ IP: ${ip}
   }
 }
 __name(sendMessage, "sendMessage");
+__name2(sendMessage, "sendMessage");
 async function socks5Connect(targetHost, targetPort) {
   const parsedSocks5Address = await socks5AddressParser(socks5Address);
   const { username, password: password2, hostname, port } = parsedSocks5Address;
@@ -850,6 +865,7 @@ async function socks5Connect(targetHost, targetPort) {
   return sock;
 }
 __name(socks5Connect, "socks5Connect");
+__name2(socks5Connect, "socks5Connect");
 async function httpConnect(addressRemote, portRemote) {
   const parsedSocks5Address = await socks5AddressParser(socks5Address);
   const { username, password: password2, hostname, port } = parsedSocks5Address;
@@ -934,6 +950,7 @@ async function httpConnect(addressRemote, portRemote) {
   return sock;
 }
 __name(httpConnect, "httpConnect");
+__name2(httpConnect, "httpConnect");
 async function socks5AddressParser(address) {
   const lastAtIndex = address.lastIndexOf("@");
   let [latter, former] = lastAtIndex === -1 ? [address, void 0] : [address.substring(lastAtIndex + 1), address.substring(0, lastAtIndex)];
@@ -975,11 +992,13 @@ async function socks5AddressParser(address) {
   };
 }
 __name(socks5AddressParser, "socks5AddressParser");
+__name2(socks5AddressParser, "socks5AddressParser");
 function isValidIPv4(address) {
   const ipv4Regex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
   return ipv4Regex.test(address);
 }
 __name(isValidIPv4, "isValidIPv4");
+__name2(isValidIPv4, "isValidIPv4");
 function subAddresses(host, pw, userAgent, newAddressesapi, newAddressescsv) {
   addresses = addresses.concat(newAddressesapi);
   addresses = addresses.concat(newAddressescsv);
@@ -1038,6 +1057,7 @@ function subAddresses(host, pw, userAgent, newAddressesapi, newAddressescsv) {
   return btoa(base64Response);
 }
 __name(subAddresses, "subAddresses");
+__name2(subAddresses, "subAddresses");
 async function getAddressesapi(api) {
   if (!api || api.length === 0) return [];
   let newapi = "";
@@ -1102,6 +1122,7 @@ async function getAddressesapi(api) {
   return newAddressesapi;
 }
 __name(getAddressesapi, "getAddressesapi");
+__name2(getAddressesapi, "getAddressesapi");
 async function getAddressescsv(tls) {
   if (!addressescsv || addressescsv.length === 0) {
     return [];
@@ -1152,6 +1173,7 @@ async function getAddressescsv(tls) {
   return newAddressescsv;
 }
 __name(getAddressescsv, "getAddressescsv");
+__name2(getAddressescsv, "getAddressescsv");
 function surge(content, url) {
   let \u6BCF\u884C\u5185\u5BB9;
   if (content.includes("\r\n")) {
@@ -1174,6 +1196,7 @@ function surge(content, url) {
   return \u8F93\u51FA\u5185\u5BB9;
 }
 __name(surge, "surge");
+__name2(surge, "surge");
 function sha224(\u8F93\u5165\u5B57\u7B26\u4E32) {
   const \u5E38\u91CFK = [
     1116352408,
@@ -1245,6 +1268,7 @@ function sha224(\u8F93\u5165\u5B57\u7B26\u4E32) {
     return unescape(encodeURIComponent(\u5B57\u7B26\u4E32));
   }
   __name(utf8\u7F16\u7801, "utf8\u7F16\u7801");
+  __name2(utf8\u7F16\u7801, "utf8\u7F16\u7801");
   function \u5B57\u8282\u8F6C\u5341\u516D\u8FDB\u5236(\u5B57\u8282\u6570\u7EC4) {
     let \u5341\u516D\u8FDB\u5236 = "";
     for (let i = 0; i < \u5B57\u8282\u6570\u7EC4.length; i++) {
@@ -1254,6 +1278,7 @@ function sha224(\u8F93\u5165\u5B57\u7B26\u4E32) {
     return \u5341\u516D\u8FDB\u5236;
   }
   __name(\u5B57\u8282\u8F6C\u5341\u516D\u8FDB\u5236, "\u5B57\u8282\u8F6C\u5341\u516D\u8FDB\u5236");
+  __name2(\u5B57\u8282\u8F6C\u5341\u516D\u8FDB\u5236, "\u5B57\u8282\u8F6C\u5341\u516D\u8FDB\u5236");
   function sha224\u6838\u5FC3(\u8F93\u5165\u5B57\u7B26\u4E322) {
     let \u54C8\u5E0C\u503C = [
       3238371032,
@@ -1327,10 +1352,12 @@ function sha224(\u8F93\u5165\u5B57\u7B26\u4E32) {
     return \u54C8\u5E0C\u503C.slice(0, 7);
   }
   __name(sha224\u6838\u5FC3, "sha224\u6838\u5FC3");
+  __name2(sha224\u6838\u5FC3, "sha224\u6838\u5FC3");
   function \u53F3\u65CB\u8F6C(\u6570\u503C, \u4F4D\u6570) {
     return (\u6570\u503C >>> \u4F4D\u6570 | \u6570\u503C << 32 - \u4F4D\u6570) >>> 0;
   }
   __name(\u53F3\u65CB\u8F6C, "\u53F3\u65CB\u8F6C");
+  __name2(\u53F3\u65CB\u8F6C, "\u53F3\u65CB\u8F6C");
   const \u7F16\u7801\u8F93\u5165 = utf8\u7F16\u7801(\u8F93\u5165\u5B57\u7B26\u4E32);
   const \u54C8\u5E0C\u7ED3\u679C = sha224\u6838\u5FC3(\u7F16\u7801\u8F93\u5165);
   return \u5B57\u8282\u8F6C\u5341\u516D\u8FDB\u5236(
@@ -1343,6 +1370,7 @@ function sha224(\u8F93\u5165\u5B57\u7B26\u4E32) {
   );
 }
 __name(sha224, "sha224");
+__name2(sha224, "sha224");
 async function \u8FC1\u79FB\u5730\u5740\u5217\u8868(env, txt = "ADD.txt") {
   const \u65E7\u6570\u636E = await env.KV.get(`/${txt}`);
   const \u65B0\u6570\u636E = await env.KV.get(txt);
@@ -1354,6 +1382,7 @@ async function \u8FC1\u79FB\u5730\u5740\u5217\u8868(env, txt = "ADD.txt") {
   return false;
 }
 __name(\u8FC1\u79FB\u5730\u5740\u5217\u8868, "\u8FC1\u79FB\u5730\u5740\u5217\u8868");
+__name2(\u8FC1\u79FB\u5730\u5740\u5217\u8868, "\u8FC1\u79FB\u5730\u5740\u5217\u8868");
 async function KV(request, env, txt = "ADD.txt") {
   try {
     if (request.method === "POST") {
@@ -1630,6 +1659,7 @@ async function KV(request, env, txt = "ADD.txt") {
   }
 }
 __name(KV, "KV");
+__name2(KV, "KV");
 async function bestIP(request, env, txt = "ADD.txt") {
   const country = request.cf?.country || "CN";
   const url = new URL(request.url);
@@ -1657,6 +1687,7 @@ async function bestIP(request, env, txt = "ADD.txt") {
     }
   }
   __name(getNipDomain, "getNipDomain");
+  __name2(getNipDomain, "getNipDomain");
   const nipDomain = await getNipDomain();
   async function GetCFIPs(ipSource = "official", targetPort = "443") {
     try {
@@ -1737,6 +1768,7 @@ async function bestIP(request, env, txt = "ADD.txt") {
     }
   }
   __name(GetCFIPs, "GetCFIPs");
+  __name2(GetCFIPs, "GetCFIPs");
   function parseProxyIPLine(line, targetPort) {
     try {
       line = line.trim();
@@ -1799,6 +1831,7 @@ async function bestIP(request, env, txt = "ADD.txt") {
     }
   }
   __name(parseProxyIPLine, "parseProxyIPLine");
+  __name2(parseProxyIPLine, "parseProxyIPLine");
   function isValidIP(ip) {
     const ipRegex = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/;
     const match = ip.match(ipRegex);
@@ -1812,13 +1845,14 @@ async function bestIP(request, env, txt = "ADD.txt") {
     return true;
   }
   __name(isValidIP, "isValidIP");
+  __name2(isValidIP, "isValidIP");
   function generateIPsFromCIDR(cidr, count = 1) {
     const [network, prefixLength] = cidr.split("/");
     const prefix = parseInt(prefixLength);
-    const ipToInt = /* @__PURE__ */ __name((ip) => {
+    const ipToInt = /* @__PURE__ */ __name2((ip) => {
       return ip.split(".").reduce((acc, octet) => (acc << 8) + parseInt(octet), 0) >>> 0;
     }, "ipToInt");
-    const intToIP = /* @__PURE__ */ __name((int) => {
+    const intToIP = /* @__PURE__ */ __name2((int) => {
       return [
         int >>> 24 & 255,
         int >>> 16 & 255,
@@ -1846,6 +1880,7 @@ async function bestIP(request, env, txt = "ADD.txt") {
     return Array.from(ips);
   }
   __name(generateIPsFromCIDR, "generateIPsFromCIDR");
+  __name2(generateIPsFromCIDR, "generateIPsFromCIDR");
   if (request.method === "POST") {
     if (!env.KV) return new Response("\u672A\u7ED1\u5B9AKV\u7A7A\u95F4", { status: 400 });
     try {
@@ -3181,6 +3216,7 @@ async function bestIP(request, env, txt = "ADD.txt") {
   });
 }
 __name(bestIP, "bestIP");
+__name2(bestIP, "bestIP");
 async function getUsage(accountId, email, apikey, apitoken, all = 1e5) {
   async function getAccountId(email2, apikey2) {
     console.log("\u6B63\u5728\u83B7\u53D6\u8D26\u6237\u4FE1\u606F...");
@@ -3230,6 +3266,7 @@ async function getUsage(accountId, email, apikey, apitoken, all = 1e5) {
     return id;
   }
   __name(getAccountId, "getAccountId");
+  __name2(getAccountId, "getAccountId");
   try {
     if (!accountId) {
       console.log("\u672A\u63D0\u4F9B\u8D26\u6237ID\uFF0C\u6B63\u5728\u81EA\u52A8\u83B7\u53D6...");
@@ -3322,6 +3359,7 @@ async function getUsage(accountId, email, apikey, apitoken, all = 1e5) {
   }
 }
 __name(getUsage, "getUsage");
+__name2(getUsage, "getUsage");
 async function nginx() {
   const text = `
 	<!DOCTYPE html>
@@ -3353,6 +3391,7 @@ async function nginx() {
   return text;
 }
 __name(nginx, "nginx");
+__name2(nginx, "nginx");
 var \u5565\u5565\u5565_\u5199\u7684\u8FD9\u662F\u5565\u554A = atob("ZEhKdmFtRnU=");
 async function config_Json(userID, hostName, sub, UA, \u8BF7\u6C42CF\u53CD\u4EE3IP2, _url, fakeUserID, fakeHostName, env) {
   const newSocks5s = socks5s.map((socks5Address2) => {
@@ -3413,6 +3452,7 @@ async function config_Json(userID, hostName, sub, UA, \u8BF7\u6C42CF\u53CD\u4EE3
   });
 }
 __name(config_Json, "config_Json");
+__name2(config_Json, "config_Json");
 function config_Html(token = "test", proxyhost = "") {
   const html = `<!DOCTYPE html>
 <html lang="zh-CN">
@@ -4828,7 +4868,7 @@ function config_Html(token = "test", proxyhost = "") {
             const subName = configData.sub.SUBNAME;
             if (subName) {
                 document.getElementById('pageTitle').textContent = subName + ' \u914D\u7F6E\u9875\u9762';
-                document.getElementById('pageHeader').textContent = '\u{1F680} ' + subName + ' \u914D\u7F6E\u4E2D\u5FC3';
+                document.getElementById('pageHeader').textContent = '\u{1F680} ' + subName + ' EBI';
             }
         }
 
@@ -5046,10 +5086,11 @@ function config_Html(token = "test", proxyhost = "") {
   return html;
 }
 __name(config_Html, "config_Html");
+__name2(config_Html, "config_Html");
 async function \u89E3\u6790\u5730\u5740\u7AEF\u53E3(proxyIP2) {
   proxyIP2 = proxyIP2.toLowerCase();
   if (proxyIP2.includes(".william")) {
-    const williamResult = await (/* @__PURE__ */ __name((async function \u89E3\u6790William\u57DF\u540D(william) {
+    const williamResult = await (/* @__PURE__ */ __name2(/* @__PURE__ */ __name((async function \u89E3\u6790William\u57DF\u540D(william) {
       try {
         const response = await fetch(`https://1.1.1.1/dns-query?name=${william}&type=TXT`, { headers: { "Accept": "application/dns-json" } });
         if (!response.ok) return null;
@@ -5065,7 +5106,7 @@ async function \u89E3\u6790\u5730\u5740\u7AEF\u53E3(proxyIP2) {
         console.error("\u89E3\u6790ProxyIP\u5931\u8D25:", error);
         return null;
       }
-    }), "\u89E3\u6790William\u57DF\u540D"))(proxyIP2);
+    }), "\u89E3\u6790William\u57DF\u540D"), "\u89E3\u6790William\u57DF\u540D"))(proxyIP2);
     proxyIP2 = williamResult || proxyIP2;
   }
   let \u5730\u5740 = proxyIP2, \u7AEF\u53E3 = 443;
@@ -5086,6 +5127,7 @@ async function \u89E3\u6790\u5730\u5740\u7AEF\u53E3(proxyIP2) {
   return [\u5730\u5740, \u7AEF\u53E3];
 }
 __name(\u89E3\u6790\u5730\u5740\u7AEF\u53E3, "\u89E3\u6790\u5730\u5740\u7AEF\u53E3");
+__name2(\u89E3\u6790\u5730\u5740\u7AEF\u53E3, "\u89E3\u6790\u5730\u5740\u7AEF\u53E3");
 export {
   worker_default as default
 };
